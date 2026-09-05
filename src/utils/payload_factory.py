@@ -5,7 +5,7 @@ from typing import Dict, Any, Callable, Optional
 from faker import Faker
 import yaml
 
-fake = Faker()
+fake = Faker("en_IN")
 
 def get_random_suffix(prefix: str, length: int = 8) -> str:
     return prefix + ''.join(random.choices(string.ascii_letters + string.digits, k=length))
@@ -25,6 +25,13 @@ RULE_HANDLERS: Dict[str, Callable[[], Any]] = {
     "faker.email": fake.email,
     "faker.company": fake.company,
 }
+
+def get_address_dict() -> dict:
+    return {
+        "pincode": str(random.randint(100000, 999999)),   # 6-digit realistic PIN code
+        "state": fake.state(),                            # random Indian state
+        "city": fake.city_name()                          # random Indian city
+    }
 
 def apply_rule(rule: str) -> Any:
     """Apply a rule string to generate a value, supporting parameters."""

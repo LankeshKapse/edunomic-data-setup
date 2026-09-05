@@ -2,7 +2,6 @@ import os
 import random
 import string
 from datetime import date
-
 import yaml as yaml
 from typing import Optional, Any, Dict, List
 
@@ -42,6 +41,12 @@ class ConfigLoader:
                 return default
             value = value[k]
         return value
+
+    def get_list(self, parent_key: str, key:str) -> Any:
+        for dic in self.get_property(parent_key):
+            if key in dic:
+                return dic[key]
+        raise ValueError("property not found: {}.{}".format(parent_key,key))
 
     def get_property(self, key: str, default: Optional[Any] = None) -> Any:
         return self.get_nested(key, default) if "." in key else self.get(key, default)

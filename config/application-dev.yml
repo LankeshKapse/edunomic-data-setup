@@ -3,3 +3,8 @@ app:
     org: http://localhost:8090/organization
     lead: http://localhost:8093/lead
     admission: http://localhost:8084/admission
+
+setup:
+  config:
+    - org: ../config/org_setup_config.yml
+    - student: ../config/stuent_setup_config.yml

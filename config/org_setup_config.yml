@@ -5,6 +5,7 @@ trust:
   primaryContactNo: "faker.phone"
   address: "faker.address"
   isActive: "true"
+  "country": "INDIA"
 
 university:
   universityName: "faker.company"
@@ -12,6 +13,7 @@ university:
   registrationNumber: "random_suffix:REG_:6"
   address: "faker.address"
   primaryContactNumber: "faker.phone"
+  "country": "INDIA"
   isActive: "true"
 
 school:
@@ -22,6 +24,7 @@ school:
   primaryContactNumber: "faker.phone"
   schoolCode: "random_suffix:SCH_:4"
   campusCode: "random_suffix:CP_:4"
+  "country": "INDIA"
   isActive: "true"
 
 program:
@@ -38,3 +41,4 @@ program:
   programType: "PHD"
   contactNumber: "faker.phone"
   address: "faker.address"
+  "country": "INDIA"
