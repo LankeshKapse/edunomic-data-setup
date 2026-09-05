@@ -1,0 +1,21 @@
+{
+  "formName": "Engineering Admission Form 2024",
+  "universityId": 1,
+  "schoolId": 1,
+  "programId": 1,
+  "startDate": "2024-01-01",
+  "endDate": "2024-02-28",
+  "sortCode": "ENG-2024",
+  "batchId": 1,
+  "batchYear": "2024",
+  "educationalYear": 1,
+  "minimumFee": 100,
+  "formPrefix": "ap",
+  "formSuffix": "fp",
+  "counter": 900,
+  "formAmount": 1000.00,
+  "formOneDiscount": 100.00,
+  "formTwoDiscount": 50.00,
+  "advanceFee": 500.00,
+  "isActive": true
+}

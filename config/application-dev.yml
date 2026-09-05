@@ -1,0 +1,5 @@
+app:
+  outbound:
+    org: http://localhost:8090/organization
+    lead: http://localhost:8093/lead
+    admission: http://localhost:8084/admission
