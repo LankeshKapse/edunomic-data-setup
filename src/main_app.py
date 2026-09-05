@@ -1,6 +1,4 @@
 from typing import Any, Dict, Optional
-
-
 from utils.payload_factory import PayloadFactory, get_address_dict
 from utils.request_utility import RequestUtility
 from utils.utilities import ConfigLoader
