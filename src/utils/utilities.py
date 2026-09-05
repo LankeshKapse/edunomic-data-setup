@@ -1,6 +1,8 @@
 import os
 import random
 import string
+from datetime import date
+
 import yaml as yaml
 from typing import Optional, Any, Dict, List
 
@@ -8,6 +10,12 @@ from typing import Optional, Any, Dict, List
 
 def get_random_suffix(prefix:str, length:int=10) -> str:
     return prefix+''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length))
+
+def get_today_date(format:str="%Y-%m-%d") -> str:
+    # Get today's date
+    today = date.today()
+    # Format as YYYY-MM-DD
+    return today.strftime(format)
 
 
 class ConfigLoader:

@@ -1,0 +1,40 @@
+trust:
+  trustRegNo: "random_suffix:TRUST_:4"
+  trustName: "faker.name"
+  trustAbbreviation: "random_suffix:TR_:4"
+  primaryContactNo: "faker.phone"
+  address: "faker.address"
+  isActive: "true"
+
+university:
+  universityName: "faker.company"
+  abbreviation: "random_suffix:UNI_:6"
+  registrationNumber: "random_suffix:REG_:6"
+  address: "faker.address"
+  primaryContactNumber: "faker.phone"
+  isActive: "true"
+
+school:
+  schoolName: "faker.company"
+  schoolAbbreviation: "random_suffix:SCH_:6"
+  schoolRegistrationNumber: "random_suffix:REG_:6"
+  address: "faker.address"
+  primaryContactNumber: "faker.phone"
+  schoolCode: "random_suffix:SCH_:4"
+  campusCode: "random_suffix:CP_:4"
+  isActive: "true"
+
+program:
+  programName: "random_suffix:MBA_:4"
+  programCode: "random_suffix:SCH_:4"
+  registrationNumber: "random_suffix:REG_:6"
+  abbreviation: "random_suffix:ABR_:6"
+  streamId: "1"
+  establishmentDate: "today_date:"
+  creditFrameworkId: "1"
+  duration: "2"
+  noOfSemester: "4"
+  programTitle: "PERCENTAGE"
+  programType: "PHD"
+  contactNumber: "faker.phone"
+  address: "faker.address"
