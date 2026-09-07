@@ -1,0 +1,29 @@
+designation:
+  designationName: "random_suffix:DESIG_:4"
+  isActive: "true"
+
+#role:
+#  roleName: "HOD"
+#  roleCode: "02"
+#  isActive: "true"
+
+quota:
+  quotaName: "INTERNATIONAL"
+  abbrev: "random_suffix:OM_4"
+  isActive: "true"
+
+category:
+  categoryName: "OPEN"
+  abbreviation: "o"
+  isActive: "true"
+
+document:
+  documentName: "marksheet"
+  isActive: "true"
+
+credit-framework:
+  qualificationTitle: "random_suffix:Bachelor_:4"
+  frameworkLevel: "4.2"
+  numberOfSemester: "4"
+  numberOfYear: "2"
+  programType: "PG"
