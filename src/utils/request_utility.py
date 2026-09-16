@@ -6,6 +6,14 @@ from typing import Any, Dict, List, Optional
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+def response_extractor(data: Dict[str, Any], extractor: List[str] | None = None, default_value: Any = None) -> Dict[str, Any]:
+    if extractor is None:
+        return data
+    else:
+        return {k: data.get(k, default_value) for k in extractor}
+
+
 class RequestUtility:
     def __init__(self, timeout: int = 10):
         self.timeout = timeout
@@ -47,7 +55,7 @@ class RequestUtility:
         host: str,
         api_path: str,
         payload: Dict[str, Any],
-        extractor: List[str],
+        extractor: List[str] | None = None,
         default_value: Optional[str] = None
     ) -> Dict[str, Any]:
         """
@@ -57,7 +65,10 @@ class RequestUtility:
         if res["success"]:
             data = res["data"]
             logger.info(f"Entity created: {data}")
-            return {k: data.get(k, default_value) for k in extractor}
+            return response_extractor(data=data, extractor=extractor, default_value=default_value)
         else:
             logger.error(f"{res['error']} -> {res['details']} -> Request: {payload=}")
-            return {k: default_value for k in extractor}
+            if extractor is not None:
+                return {k: default_value for k in extractor}
+            else:
+                return res

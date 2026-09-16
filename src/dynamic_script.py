@@ -165,7 +165,7 @@ def run_pipeline(request_utility: RequestUtility,
             drop_keys=stage.get("drop_keys"),
         )
 
-        entity = request_utility.create_entity(host, stage["uri"], payload, stage["extract"])
+        entity = request_utility.create_entity(host, stage["uri"], payload, stage.get("extract", None))
         created[stage["name"]] = entity
         parent_entity = entity
 
