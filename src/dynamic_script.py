@@ -1,10 +1,12 @@
 import argparse
 import os
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from utils.payload_factory import PayloadFactory, get_address_dict
 from utils.request_utility import RequestUtility
 from utils.utilities import ConfigLoader
+from utils.oauth import OauthClient
 
 # The org hierarchy is a chain: each stage's id feeds into the next stage's
 # payload as a foreign key. Add/remove/reorder stages here instead of writing
@@ -121,7 +123,9 @@ def build_payload(payload_factory: PayloadFactory,
 def run_pipeline(request_utility: RequestUtility,
                   payload_factory: PayloadFactory,
                   host: str,
-                  pipeline: List[Dict[str, Any]]
+                  pipeline: List[Dict[str, Any]],
+                  token:str,
+                  tokentype:str
                   ) -> Dict[str, Dict[str, Any]]:
     """Create each entity in a pipeline, feeding each result forward as the
     parent id for the next stage (when parent_key is set). Returns every
@@ -165,7 +169,7 @@ def run_pipeline(request_utility: RequestUtility,
             drop_keys=stage.get("drop_keys"),
         )
 
-        entity = request_utility.create_entity(host, stage["uri"], payload, stage.get("extract", None))
+        entity = request_utility.create_entity(host, stage["uri"], payload, stage.get("extract", None), token=token, tokentype=tokentype)
         created[stage["name"]] = entity
         parent_entity = entity
 
@@ -174,14 +178,16 @@ def run_pipeline(request_utility: RequestUtility,
 
 def run_all_pipelines(request_utility: RequestUtility,
                        prop: ConfigLoader,
-                       pipelines: Dict[str, Dict[str, Any]]
+                       pipelines: Dict[str, Dict[str, Any]],
+                      token:str,
+                      tokentype:str
                        ) -> Dict[str, Dict[str, Dict[str, Any]]]:
     results: Dict[str, Dict[str, Dict[str, Any]]] = {}
     for name, cfg in pipelines.items():
         host = prop.get_property(cfg["host_property"])
         setup_config = prop.get_list("setup.config", name)
         payload_factory = PayloadFactory(setup_config)
-        results[name] = run_pipeline(request_utility, payload_factory, host, cfg["stages"])
+        results[name] = run_pipeline(request_utility, payload_factory, host, cfg["stages"],token,tokentype)
     return results
 
 
@@ -199,7 +205,11 @@ def main() -> None:
     request_utility: RequestUtility = RequestUtility()
     prop: ConfigLoader = ConfigLoader(path=apps_yml_path)
 
-    run_all_pipelines(request_utility, prop, ALL_PIPELINES)
+    service_file = Path(__file__).resolve().parent.parent / "service-account.json"
+    oath_client:OauthClient = OauthClient(str(service_file))
+    token:str = oath_client.get_token()
+    tokentype:str = "gmail"
+    run_all_pipelines(request_utility, prop, ALL_PIPELINES,token,tokentype)
 
 
 if __name__ == "__main__":

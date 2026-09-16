@@ -1,9 +1,9 @@
 app:
   outbound:
-    org: http://localhost:8090/organization
-    lead: http://localhost:8093/lead
-    admission: http://localhost:8084/admission
-    master: http://localhost:8085/master
+    org: http://localhost:8080/organization
+    lead: http://localhost:8080/lead
+    admission: http://localhost:8080/admission
+    master: http://localhost:8080/master
 
 setup:
   config:

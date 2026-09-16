@@ -19,11 +19,20 @@ class RequestUtility:
         self.timeout = timeout
         self.session = requests.Session()
 
-    def post_func(self, payload: Dict[str, Any], host: str, api_path: str) -> Dict[str, Any]:
+    def post_func(self, payload: Dict[str, Any], host: str, api_path: str,
+                  token: str,
+                  tokentype: str
+                 ) -> Dict[str, Any]:
+
         logger.info("Calling POST function {}".format(api_path))
         post_uri = host + api_path
         try:
-            response = self.session.post(post_uri, json=payload, timeout=self.timeout)
+            headers: dict[str,str] = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "tokentype": tokentype
+            }
+            response = self.session.post(post_uri, json=payload, headers=headers, timeout=self.timeout)
 
             if not response.ok:
                 return {
@@ -56,12 +65,14 @@ class RequestUtility:
         api_path: str,
         payload: Dict[str, Any],
         extractor: List[str] | None = None,
-        default_value: Optional[str] = None
+        default_value: Optional[str] = None,
+        token: str | None =None,
+        tokentype: str | None =None
     ) -> Dict[str, Any]:
         """
         Generic helper to POST an entity and return selected keys from the response.
         """
-        res = self.post_func(payload=payload, host=host, api_path=api_path)
+        res = self.post_func(payload=payload, host=host, api_path=api_path, token=token, tokentype=tokentype)
         if res["success"]:
             data = res["data"]
             logger.info(f"Entity created: {data}")
