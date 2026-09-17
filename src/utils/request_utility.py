@@ -72,7 +72,12 @@ class RequestUtility:
         """
         Generic helper to POST an entity and return selected keys from the response.
         """
-        res = self.post_func(payload=payload, host=host, api_path=api_path, token=token, tokentype=tokentype)
+        res = self.post_func(payload=payload,
+                             host=host,
+                             api_path=api_path,
+                             token=token,
+                             tokentype=tokentype
+                        )
         if res["success"]:
             data = res["data"]
             logger.info(f"Entity created: {data}")

@@ -1,12 +1,11 @@
 import argparse
 import os
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from utils.oauth import OauthClient
 from utils.payload_factory import PayloadFactory, get_address_dict
 from utils.request_utility import RequestUtility
 from utils.utilities import ConfigLoader
-from utils.oauth import OauthClient
 
 # The org hierarchy is a chain: each stage's id feeds into the next stage's
 # payload as a foreign key. Add/remove/reorder stages here instead of writing
@@ -198,6 +197,18 @@ def main() -> None:
         default=os.environ.get("APP_ENV", "dev"),
         help="Environment name; resolves to ../config/application-<env>.yml",
     )
+
+    parser.add_argument(
+        "-tt","--tokentype",
+        default=os.environ.get("TOKEN_TYPE", "gmail"),
+        help="Access token provider",
+    )
+
+    parser.add_argument(
+        "-sa", "--service-account",
+        help="Service provider config json",
+    )
+
     args = parser.parse_args()
 
     apps_yml_path: str = f"../config/application-{args.env}.yml"
@@ -205,11 +216,10 @@ def main() -> None:
     request_utility: RequestUtility = RequestUtility()
     prop: ConfigLoader = ConfigLoader(path=apps_yml_path)
 
-    service_file = Path(__file__).resolve().parent.parent / "service-account.json"
-    oath_client:OauthClient = OauthClient(str(service_file))
+    oath_client:OauthClient = OauthClient(str(args.service_account))
     token:str = oath_client.get_token()
-    tokentype:str = "gmail"
-    run_all_pipelines(request_utility, prop, ALL_PIPELINES,token,tokentype)
+
+    run_all_pipelines(request_utility, prop, ALL_PIPELINES,token,args.tokentype)
 
 
 if __name__ == "__main__":
