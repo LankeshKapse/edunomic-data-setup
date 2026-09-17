@@ -1,5 +1,5 @@
 from google.oauth2 import service_account
-import google.auth.transport.requests
+from  google.auth.transport.requests import Request
 
 class OauthClient:
 
@@ -15,7 +15,7 @@ class OauthClient:
         credentials = service_account.Credentials.from_service_account_file(
             self.service_file, scopes=scopes)
 
-        request = google.auth.transport.requests.Request()
+        request = Request()
         credentials.refresh(request)
 
         return credentials.token
