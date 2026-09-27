@@ -213,6 +213,9 @@ def main() -> None:
 
     apps_yml_path: str = f"../config/application-{args.env}.yml"
 
+    if args.service_account is None:
+        raise FileNotFoundError("\U0001F621:: service-account.json not provided...!")
+
     request_utility: RequestUtility = RequestUtility()
     prop: ConfigLoader = ConfigLoader(path=apps_yml_path)
 
